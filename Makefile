@@ -1,11 +1,13 @@
+all: cardano parallel
+
 cardano: 
 	gcc cardano_triplets.c -o cardano $(CONFIG)
 
 parallel:
-	gcc cardano_triplets.c -o cardano $(PARCONFIG)
+	gcc cardano_triplets.c -o cardano_parallel $(PARCONFIG)
 
 clean:
-	rm -f cardano *.o core core.*
+	rm -f cardano cardano_parallel *.o core core.*
 
 tidy: clean
 	rm -f *.*~ *~
@@ -21,6 +23,7 @@ debug: cardano
 easy: CONFIG=$(EASY_FLAGS)
 easy: cardano
 
-test: debug
-	time ./cardano 100
+test: 
+	time ./cardano 1000
+	time ./cardano_parallel 1000
 	
