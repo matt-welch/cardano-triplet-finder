@@ -23,7 +23,10 @@ debug: cardano
 easy: CONFIG=$(EASY_FLAGS)
 easy: cardano
 
-test: 
+quiet: CONFIG=$(EASY_FLAGS) -DQUIET
+quiet: all
+
+test: quiet 
 	time ./cardano 1000
 	time ./cardano_parallel 1000
 	
