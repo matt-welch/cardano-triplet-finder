@@ -35,25 +35,26 @@ int main(int argc, char* argv[]) {
 #endif
     eps = 1e-11;
     n=atoi(argv[1]);
-    for(a = 1 ; a < n ; a++)   {   
+    for(a = 1 ; a < n ; a++)   {  
+        numer = ((a+1) * (a+1)) * (8*a - 1); 
 #ifdef PARALLEL
-#pragma omp parallel for reduction(+:count) private(b, numer, denom, c) firstprivate(n, a, eps)
+#pragma omp parallel for reduction(+:count) private(b, denom, c) firstprivate(n, a, eps, numer)
 #endif
         for(b = 1 ; b < n ; b++)   {   
             /* Solve for c, determine if it is an integer */
-            numer = ((a+1) * (a+1)) * (8*a - 1); 
             denom = 27 * b * b;
             c = (double)numer / (double)denom;
-#ifdef DEBUG
+#ifdef VERBOSE
             printf ("%i %i %f\n",a,b,c);
 #endif            
-           
             if(c > 0 && ((c - (int)c)) < eps){
                 /* if c is an integer, we've found a triplet */
                 if( (a + b + c ) <= n ) {
                     /* verify a + b + c < n  (limit)*/ 
                     count++;
+#ifndef QUIET
                     printf ("%i %i %i\n",a,b,(int)c);
+#endif
                 }
             }
        }
