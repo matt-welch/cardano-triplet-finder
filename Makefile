@@ -23,6 +23,13 @@ debug: cardano
 easy: CONFIG=$(EASY_FLAGS)
 easy: cardano
 
+option1: CONFIG= -O0 -lm -DQUIET
+option1: cardano
+
+option2: CONFIG= -O3 -lm -DQUIET
+option2: cardano
+
+
 quiet: CONFIG=$(EASY_FLAGS) -DQUIET
 quiet: all
 
