@@ -1,11 +1,11 @@
 /*******************************************************************************
  * FILENAME:    cardano_triplets.c
- * DESCRIPTION: 
+ * DESCRIPTION: Cardano Triplet Finder 
  * AUTHOR:      James Matthew Welch [JMW]
  * SCHOOL:      Arizona State University
  * CLASS:       CSE598: High Performance Computing
  * INSTRUCTOR:  Dr. Gil Speyer
- * SECTION:     
+ * SECTION:     20520
  * TERM:        Spring 2013
  *******************************************************************************/
 
@@ -14,7 +14,7 @@
 # include <math.h>   
 # include <omp.h>
 # include <time.h>
-#include <sys/time.h>
+# include <sys/time.h>
 int main(int argc, char* argv[]) {
     /* numc variables */
     int a,b,n, count=0 ;
@@ -29,18 +29,15 @@ int main(int argc, char* argv[]) {
     /* Get start time */
     gettimeofday(&start, NULL);
 
-#if 0
-    double term1,exp1,test1,test2;   
-    exp1=1.0/3.0;
-#endif
     eps = 1e-11;
     n=atoi(argv[1]);
     for(a = 1 ; a < n ; a++)   {  
         numer = ((a+1) * (a+1)) * (8*a - 1); 
 #ifdef PARALLEL
-#pragma omp parallel for reduction(+:count) private(b, denom, c) firstprivate(n, a, eps, numer)
+#pragma omp parallel for reduction(+:count) private(b, denom, c) firstprivate(n, a, eps, numer) 
 #endif
-        for(b = 1 ; b < n ; b++)   {   
+        /* limit b-values to n-a since a+b+c <= n */
+        for(b = 1 ; b < n-a ; b++)   {   
             /* Solve for c, determine if it is an integer */
             denom = 27 * b * b;
             c = (double)numer / (double)denom;
