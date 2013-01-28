@@ -31,11 +31,12 @@ int main(int argc, char* argv[]) {
 
     eps = 1e-11;
     n=atoi(argv[1]);
-    for(a = 1 ; a < n ; a++)   {  
-        numer = ((a+1) * (a+1)) * (8*a - 1); 
 #ifdef PARALLEL
-#pragma omp parallel for reduction(+:count) private(b, denom, c) firstprivate(n, a, eps, numer) 
+#pragma omp parallel for reduction(+:count) private(b, denom, c) firstprivate(n,  eps) 
 #endif
+    /* a may be limited to n-2 since b_min = b_min = 1  */
+    for(a = 1 ; a < n-2 ; a++)   {  
+        numer = ((a+1) * (a+1)) * (8*a - 1); 
         /* limit b-values to n-a since a+b+c <= n */
         for(b = 1 ; b < n-a ; b++)   {   
             /* Solve for c, determine if it is an integer */
@@ -45,9 +46,9 @@ int main(int argc, char* argv[]) {
             printf ("%i %i %f\n",a,b,c);
 #endif            
             if(c > 0 && ((c - (int)c)) < eps){
-                /* if c is an integer, we've found a triplet */
+                /* if c is >0 and an integer, we've found a triplet */
+                /* verify a + b + c < n  (limit)*/ 
                 if( (a + b + c ) <= n ) {
-                    /* verify a + b + c < n  (limit)*/ 
                     count++;
 #ifndef QUIET
                     printf ("%i %i %i\n",a,b,(int)c);
