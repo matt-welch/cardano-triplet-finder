@@ -7,7 +7,7 @@ parallel:
 	gcc cardano_triplets.c -o cardano_parallel $(PARCONFIG)
 
 clean:
-	rm -f cardano cardano_parallel *.o core core.*
+	rm -f cardano cardano_parallel cardano_is cardano_ip *.o core core.*
 
 tidy: clean
 	rm -f *.*~ *~
