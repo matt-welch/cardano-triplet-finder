@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
     eps = 1e-11;
     n=atoi(argv[1]);
     /* a may be limited to n-2 since b_min = b_min = 1  */
-    for(a = 1 ; a < n-2 ; a++)   {  
+    for(a = 2 ; a < n-2 ; a+=3)   {  
         numer = ((a+1) * (a+1)) * (8*a - 1); 
 #ifdef PARALLEL
 #pragma omp parallel for reduction(+:count) private(b, denom, c) firstprivate(n, a, eps, numer) 
