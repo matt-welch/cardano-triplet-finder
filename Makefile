@@ -1,3 +1,14 @@
+#/*******************************************************************************
+# * FILENAME:    Makefile
+# * DESCRIPTION: build options for cardano_triplets.c 
+# * AUTHOR:      James Matthew Welch [JMW]
+# * SCHOOL:      Arizona State University
+# * CLASS:       CSE598: High Performance Computing
+# * INSTRUCTOR:  Dr. Gil Speyer
+# * SECTION:     20520
+# * TERM:        Spring 2013
+# *******************************************************************************/
+#
 all: cardano parallel
 
 cardano: 
